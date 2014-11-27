@@ -1,0 +1,27 @@
+<nav class="bs-docs-sidebar">
+    <ul id="sidebar" class="nav nav-stacked">
+    <li><a href="{{ site.baseurl }}/">Home</a></li>
+        {% for section in site.sections %}
+            {% assign attr = section[0] %}
+            {% assign label = section[1] %}
+            {% assign myCollection = site.categories[attr] %}
+
+            {% for myPage in myCollection %}
+                {% assign thisUrl = page.url | split:'/' %}
+                {% capture leClass %}/{{ myPage.category }}/{{ myPage.className }}{% endcapture %}
+                <li
+                    {%if thisUrl[1] == myPage.category %}class="active"{% endif %}>
+                    {% if forloop.first %}
+                        <a href="/{{ myPage.category }}">{{ label }}</a>
+                    {% endif %}
+                    <ul class="nav nav-stacked">
+                        <li
+                            {%if page.url == leClass %}class="active"{% endif %}>
+                            <a href="{{ site.baseurl }}{{ myPage.url }}">{{ myPage.title }}</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</nav>
